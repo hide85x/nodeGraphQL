@@ -18,7 +18,14 @@ export default {
     Mutation: {
         register: async (root, args, { req }, info) => {
             //validate user data
-            await registerValidate.validate(args, { abortEarly: true })
+            let validationResult= await registerValidate.validate(args, { abortEarly: true })
+            //if error exist throw new Error
+            if( validationResult.error) { 
+                let errorMsg= registerValidate.validate(args, { abortEarly: true }).error.details[0].message
+                throw new Error(errorMsg)
+            }
+
+
             //check the user is in database already
             let user = await User.findOne({ username: args.username })
             if (user) {
@@ -30,7 +37,6 @@ export default {
             }
             //adding user to database
             // args.password = await bcrypt.hash(args.password)
-            consola.success(args.password)
             let newUser = await User.create(args)
             let tokens = await issueToken(newUser)
             return {

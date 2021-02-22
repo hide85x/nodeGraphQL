@@ -9,7 +9,6 @@ import typeDefs from './graphql/typeDefs';
 import resolvers from './graphql/resolvers';
 
 const { DB, IN_PROD, APP_PORT } = dotenv.config().parsed;
-consola.success(DB)
 
 //init the APP
 const app = express()
