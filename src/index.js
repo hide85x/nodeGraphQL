@@ -18,6 +18,7 @@ app.disable("x-powered-by")
 
 //starting Apollo-Express-Server
 const server = new ApolloServer({
+    context: ({req, res})=> ({req, res}),
     typeDefs,
     resolvers,
     playground: IN_PROD 
@@ -28,6 +29,7 @@ const server = new ApolloServer({
         }
     }
 })
+
 
 
 //start APP function
